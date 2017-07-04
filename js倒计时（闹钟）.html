@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="time/laydate.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background: floralwhite;
+        }
+
+        #btn{
+            margin: 8px;
+            background: greenyellow;
+            border: 1px solid floralwhite;
+            border-radius: 6px;
+            width: 88px;
+            height: 28px;
+        }
+
+        #btn:active{
+            border: none;
+        }
+        #wrap{
+            position: relative;
+            margin:50px auto;
+            width: 500px;
+            height:382px;
+            border:2px solid yellow;
+            border-radius: 10px;
+            color: orange;
+            font-weight: bold;
+        }
+        #wrap #title{
+            text-align: center;
+            height:80px;
+            line-height: 80px;
+            font-size: 30px;
+        }
+        #wrap .end_wrap{
+            width: 490px;
+            margin: 10px 26px;
+        }
+
+        #wrap #move{
+            width: 80%;
+            /*color: chartreuse;*/
+            color: orange;
+            font-weight: bold;
+            position: absolute;
+            left: 10%;
+            top: 73%;
+            overflow: hidden;
+        }
+        #wrap span{
+            margin-left: 11px;
+        }
+
+        #wrap ul{
+            list-style: none;
+            padding-left: 166px;
+            position: absolute;
+            bottom: 16px;
+            right: 36px;
+        }
+        #wrap ul li.time{
+            height: 50px;
+            line-height: 50px;
+            float: left;
+            width:50px;
+            text-align: center;
+            font-size: 40px;
+            color:red;
+        }
+        #wrap ul li.info{
+            height: 50px;
+            line-height: 50px;
+            float: left;
+            width:20px;
+            text-align: center;
+        }
+        #wrap button:first-child{
+            margin: 29px auto;
+            display: block;
+            padding: 5px 35px;
+            font-size: 25px;
+            border-radius: 10px;
+            background: yellow;
+            color:red;
+        }
+        #wrap button:last-child{
+            margin: 29px auto;
+            display: block;
+            padding: 5px 15px;
+            font-size: 18px;
+            border-radius: 10px;
+            background: cornflowerblue;
+            color:#ffffff;
+        }
+
+
+        #wrap .t_info{
+
+            height: 50px;
+            line-height: 50px;
+            position: absolute;
+            bottom: 16px;
+            left: 39px;
+        }
+
+        #ContentEditable{
+            position: relative;
+            padding: 10px;
+            overflow: hidden;
+            background: whitesmoke;
+            left: 939px;
+            top: -230px;
+            display: none;
+            border: 1px deepskyblue solid;
+            border-radius: 23px;
+        }
+    </style>
+
+</head>
+<body>
+<button id="btn" onclick="openbg()">打开背景图</button>
+<div id="wrap">
+    <div id="title">开始倒计时</div>
+    <div class="end_wrap">
+        <span>结束时间：</span>
+        <input type="text" id="edtime" onclick="laydate({istime:true,format:'YYYY/MM/DD hh:mm:ss'})"/>
+
+        <label>&nbsp;&nbsp;&nbsp;</label>
+        <label style="font-size: 16px;">选择铃声：</label>
+        <select id="v" style="height:20px;border-radius: 3px;">
+            <option value="1">铃声一 </option>
+            <option value="2">铃声二</option>
+            <option value="3">铃声三</option>
+            <option value="4">铃声四</option>
+        </select>
+
+    </div>
+    <div>
+        <button onclick="test()">开始计时</button>
+        <button onclick="musicstop()">音乐停止</button>
+    </div>
+
+    <div id="hv">
+
+        <marquee id="move" onclick=contentsChange() direction="left" scrollamount="2" scrolldelay="10" behaviour="scroll" title="点击编辑文本">
+            <!--时光匆匆，当我伸手去拦时，它却如悄悄地从指边溜掉了&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            认识你们很开心，我的16软件3班&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            我的大学生活就如这流水般缓缓而又匆匆地流淌着到了她的尽头，留给我的，是无尽的感慨收获和即将入海的宽广无限。&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            认识你们很开心，我的16软件3班-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            生活不止眼前的苟且，还有远方的苟且！&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            看着时间一滴一滴的流逝，你还忍心把它浪费在睡觉上吗？&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            把握好一分一秒！&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            珍惜相聚的时光！-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+            认识你们很开心，我的16软件3班-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+        </marquee>
+    </div>
+
+    <div class="t_info">距离当前时间还有：</div>
+    <ul>
+        <li id="d" class="time"></li>
+        <li class="info">天</li>
+        <li id="h" class="time"></li>
+        <li class="info">时</li>
+        <li id="i" class="time"></li>
+        <li class="info">分</li>
+        <li id="s" class="time"></li>
+        <li class="info">秒</li>
+    </ul>
+
+    <audio id="music" controls="controls" loop="loop" style="display: none;">
+        <source src="music/2.mp3">
+    </audio>
+</div>
+<textarea id="ContentEditable" contenteditable="true" cols="39" rows="5" placeholder="编辑滚动条文本">
+        时光匆匆，当我伸手去拦时，它却如悄悄地从指边溜掉了------------
+        认识你们很开心，我的16软件3班--------------
+        我的大学生活就如这流水般缓缓而又匆匆地流淌着到了她的尽头，留给我的，是无尽的感慨收获和即将入海的宽广无限。--------------
+        认识你们很开心，我的16软件3班-----------
+        生活不止眼前的苟且，还有远方的苟且！----------------
+        看着时间一滴一滴的流逝，你还忍心把它浪费在睡觉上吗？----------------
+        把握好一分一秒！----------------
+        珍惜相聚的时光！---------------
+        认识你们很开心，我的16软件3班-------------
+</textarea>
+<script>
+
+    document.getElementById("move").innerHTML=document.getElementById("ContentEditable").value;
+    function contentsChange(){
+
+        document.getElementById("ContentEditable").style.display="block";
+
+    }
+
+    function test(){
+        // 当前时间
+        var nowTime = new Date().getTime();
+        // 结束时间
+        var endTime = new Date(document.getElementById('edtime').value);
+        // 相差的时间
+        var t = endTime.getTime() - nowTime;
+
+
+        if(t<=0){
+            cancel();
+            return;
+        }
+
+        var d = Math.floor(t/1000/60/60/24);
+
+        var h = Math.floor(t/1000/60/60%24);
+        var i = Math.floor(t/1000/60%60);
+        var s = Math.floor(t/1000%60);
+
+        document.getElementById('d').innerHTML = d;
+        document.getElementById('h').innerHTML = h;
+        document.getElementById('i').innerHTML = i;
+        document.getElementById('s').innerHTML = s;
+
+        setTimeout(test, 1000);
+    }
+
+    function cancel(){
+
+        document.getElementById("title").innerHTML='时间到！';
+        var audio = document.getElementById('music');
+        document.getElementById('music').src="music/"+document.getElementById("v").value+".mp3";
+        audio.play();
+
+    }
+
+    function musicstop(){
+        document.getElementById('music').src="";
+    }
+
+    function openbg(){
+        if(document.getElementById("btn").innerHTML!="打开背景图"){
+            document.body.style.background="";
+            document.getElementById("btn").innerHTML="打开背景图";
+            document.getElementById("wrap").style.color="greenyellow";
+            document.getElementById("wrap").style.opacity="1";
+
+        }else{
+            document.body.style.background="url(time/images/t-bg.jpg) no-repeat 32% 49%";
+            document.getElementById("btn").innerHTML="关闭背景图";
+            document.getElementById("wrap").style.background="floralwhite";
+            document.getElementById("wrap").style.color="orangered";
+            document.getElementById("wrap").style.opacity="0.7";
+            document.getElementById("ContentEditable").style.opacity="0.7";
+        }
+
+    }
+</script>
+</body>
+</html>
